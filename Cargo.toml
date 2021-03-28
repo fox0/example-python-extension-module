@@ -1,0 +1,11 @@
+[package]
+name = "libtest"
+version = "0.1.0"
+authors = ["fox0"]
+edition = "2018"
+
+[lib]
+name = "tree"
+crate-type = ["dylib"]
+
+[dependencies]
