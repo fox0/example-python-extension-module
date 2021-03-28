@@ -1,10 +1,9 @@
-from ctypes import cdll
+import libtree
 
 
 def main():
-    lib = cdll.LoadLibrary("target/release/libtree.so")
-    lib.process()
-    print("done!")
+    assert libtree.sum_as_string(1, 2) == '3'
+    libtree.process()
 
 
 if __name__ == '__main__':

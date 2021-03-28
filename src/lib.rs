@@ -1,34 +1,25 @@
-use std::thread;
+mod func;
 
-#[no_mangle]
-pub extern "C" fn process() {
-    let handles: Vec<_> = (0..10)
-        .map(|_| {
-            thread::spawn(|| {
-                let mut x = 0;
-                for _ in 0..5_000_000 {
-                    x += 1
-                }
-                x
-            })
-        })
-        .collect();
+use crate::func::{process, sum_as_string};
 
-    for h in handles {
-        println!(
-            "Thread finished with count={}",
-            h.join().map_err(|_| "Could not join a thread!").unwrap()
-        );
-    }
+use cpython::{py_fn, py_module_initializer, PyObject, PyResult, Python};
+
+py_module_initializer!(libtree, |py, m| {
+    m.add(py, "__doc__", "This module is implemented in Rust.")?;
+    m.add(
+        py,
+        "sum_as_string",
+        py_fn!(py, py_sum_as_string(a: i64, b: i64)),
+    )?;
+    m.add(py, "process", py_fn!(py, py_process()))?;
+    Ok(())
+});
+
+fn py_sum_as_string(_: Python, a: i64, b: i64) -> PyResult<String> {
+    Ok(sum_as_string(a, b))
 }
 
-#[cfg(test)]
-mod tests {
-    use crate::process;
-
-    #[test]
-    fn process1() {
-        process();
-        assert!(true);
-    }
+fn py_process(py: Python) -> PyResult<PyObject> {
+    process();
+    Ok(py.None())
 }
