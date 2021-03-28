@@ -15,7 +15,7 @@ fn process() {
 
 #[pymodule]
 fn libtree(_py: Python, m: &PyModule) -> PyResult<()> {
-    m.add("__doc__", "This module is implemented in Rust.")?;
+    // m.add("__doc__", "This module is implemented in Rust.")?;
     // let ffi_wrapper_fun = raw_pycfunction!(some_fun);
     // let docs = "Some documentation string with null-termination\0";
     // let py_cfunction =
