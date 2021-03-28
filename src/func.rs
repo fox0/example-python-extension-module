@@ -1,7 +1,7 @@
 use std::thread;
 
-pub(crate) fn sum_as_string(a: i64, b: i64) -> String {
-    format!("{}", a + b).to_string()
+pub(crate) fn sum_as_string(a: usize, b: usize) -> String {
+    (a + b).to_string()
 }
 
 pub(crate) fn process() {
